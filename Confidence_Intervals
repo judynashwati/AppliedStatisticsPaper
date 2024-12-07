@@ -1,0 +1,19 @@
+import numpy as np
+from scipy.stats import t
+
+sleep_duration = [7.7, 6.3, 5.1, 6.3, 4.7, 4.9, 6.5, 6.1, 8.6, 5.8, 6.9, 7.2, 4.1, 7.3, 4.9, 8.8, 4.7, 6.1, 4.4, 9, 6.5, 7, 4.3, 7.7, 5, 8.5, 5, 5, 4.2, 6.4, 6.8, 4.3, 7.9, 6.3, 6.6, 6.2, 6, 6.8, 4.8, 4.9, 8.3, 8.7, 5.9, 5.4]
+study_hours = [7.9, 6, 6.7, 8.6, 2.7, 12, 11.7, 7.8, 2.4, 8.2, 0.9, 0.4, 3.1, 5.6, 10.4, 8.7, 8.9, 5.1, 4.2, 4.5, 11.9, 0.5, 10.4, 6.9, 5.3, 8.7, 5.8, 10.5, 10.8, 5.1, 3.3, 7.1, 10.9, 2.5, 7.5, 7.6, 8.8, 1.6, 8.6, 10.9, 2.2, 2.9, 11.7, 2.2]
+
+def calculate_confidence_interval(data, confidence=0.95):
+    n = len(data)
+    mean = np.mean(data)
+    std_err = np.std(data, ddof=1) / np.sqrt(n)  # Standard Error
+    t_crit = t.ppf((1 + confidence) / 2, df=n-1)  # t Critical Value
+    margin_of_error = t_crit * std_err
+    return mean - margin_of_error, mean + margin_of_error
+
+sleep_ci = calculate_confidence_interval(sleep_duration)
+study_ci = calculate_confidence_interval(study_hours)
+
+print("Sleep Duration CI:", sleep_ci)
+print("Study Hours CI:", study_ci)
