@@ -1,0 +1,11 @@
+import statsmodels.api as sm
+
+x = np.array(sleep_duration)
+y = np.array(study_hours)
+x = sm.add_constant(x)
+
+
+model = sm.OLS(y, x).fit()
+
+
+print(model.summary())
